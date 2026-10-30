@@ -2,12 +2,44 @@
 
 Read-only check of which GitLab projects have Sysdig scanning in their CI.
 
-```bash
-cp .env.example .env                     # fill GL_HOST, GL_TOKEN (GL_VERIFY_SSL=false if internal cert)
-venv/bin/python check_one.py smartfren/mysf-backend/smartpoin   # one project, verbose
-venv/bin/python audit_group.py 10326 smartfren/mysf-backend     # whole group(s) -> xlsx sheet per group
-venv/bin/python audit_group.py smartfren                       # top group, all subgroups
-```
+## Setup
+
+1. Buat Python virtual environment:
+   ```bash
+   python3 -m venv venv
+   ```
+
+2. Copy `.env` lalu isi `GL_HOST` dan `GL_TOKEN` (`GL_VERIFY_SSL=false` kalau sertifikatnya internal):
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Install requirements:
+   ```bash
+   venv/bin/pip install -r requirements.txt
+   ```
+
+## Run
+
+1. Cek satu project (verbose):
+   ```bash
+   venv/bin/python check_one.py smartfren/mysf-backend/smartpoin
+   ```
+
+2. Audit satu atau beberapa group (output: satu sheet xlsx per group):
+   ```bash
+   venv/bin/python audit_group.py 10326 smartfren/mysf-backend
+   ```
+
+3. Audit top group beserta semua subgroup:
+   ```bash
+   venv/bin/python audit_group.py smartfren
+   ```
+
+4. Inventaris repo (output: `Repo Inventory.xlsx`):
+   ```bash
+   venv/bin/python list_repos.py
+   ```
 
 Branch order and stale cutoff: edit `BRANCH_PRIORITY` / `STALE_DAYS` at the top of `audit_group.py`.
 
